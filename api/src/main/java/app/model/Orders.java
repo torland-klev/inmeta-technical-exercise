@@ -10,11 +10,12 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+/* Cant get Lombok to work with Atom.
 import lombok.Data;
-
+import lombok.Getter;
+*/
 import app.tools.exceptions.InvalidServiceException;
 
-@Data
 @Entity
 public class Orders {
 
@@ -33,8 +34,8 @@ public class Orders {
   private String name;
   // Store mobile as string; we wont be doing any calculations with the value.
   private String mobile;
-  private String from;
-  private String to;
+  private String addressFrom;
+  private String addressTo;
   private String service;
   private LocalDate date;
   private String comment;
@@ -54,8 +55,64 @@ public class Orders {
     }
   }
 
+  public void setOrderId(long orderId){
+    this.orderId = orderId;
+    this.lastUpdated = LocalDateTime.now();
+  }
+  public long getId(){
+    return this.orderId;
+  }
+  public void setName(String name){
+    this.name = name;
+    this.lastUpdated = LocalDateTime.now();
+  }
+  public String getName(){
+    return this.name;
+  }
+  public void setMobile(String mobile){
+    this.mobile = mobile;
+    this.lastUpdated = LocalDateTime.now();
+  }
+  public String getMobile(){
+    return this.mobile;
+  }
+  public void setAddressFrom(String addressFrom){
+    this.addressFrom = addressFrom;
+    this.lastUpdated = LocalDateTime.now();
+  }
+  public String getAddressFrom(){
+    return this.addressFrom;
+  }
+  public void setAddressTo(String addressTo){
+    this.addressTo = addressTo;
+    this.lastUpdated = LocalDateTime.now();
+  }
+  public String getAddressTo(){
+    return this.addressTo;
+  }
+  public void setDate(LocalDate date){
+    this.date = date;
+    this.lastUpdated = LocalDateTime.now();
+  }
+  public LocalDate getDate(){
+    return this.date;
+  }
+  public void setComment(String comment){
+    this.comment = comment;
+    this.lastUpdated = LocalDateTime.now();
+  }
+  public String getComment(){
+    return this.comment;
+  }
+  public LocalDateTime getCreated(){
+    return this.created;
+  }
+  public LocalDateTime getLastUpdated(){
+    return this.lastUpdated;
+  }
+
   @Override
   public String toString(){
-    return String.format("Name: %s, mobile: %s, address from: %s, address to: %s, service: %s, moving date: %s, comment: %s", name, mobile, from, to, service, date.toString(), comment);
+    return String.format("Name: %s, mobile: %s, address addressFrom: %s, address addressTo: %s, service: %s, moving date: %s, comment: %s", name, mobile, addressFrom, addressTo, service, date.toString(), comment);
   }
 }

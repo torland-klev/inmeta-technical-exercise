@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +31,39 @@ public class OrdersController {
   @RequestMapping(method=RequestMethod.GET, params = "id")
   public ResponseEntity<ObjectNode> getOrder(long id){
     ObjectNode objectNode = mapper.createObjectNode();
-    objectNode.put("id", id);
-    Orders Orders = orderRepository.findById(id).get();
-    if (Orders == null){
+    try {
+      Orders orders = ordersRepository.findById(id).get();
+      objectNode.put("id", id);
+      objectNode.put("message", "Order found.");
+      objectNode.put("Order", mapper.convertValue(orders, JsonNode.class));
+      return ResponseEntity.ok(objectNode);
+    } catch(Exception e){
       return ResponseEntity.notFound().build();
     }
-    objectNode.put("message", "Orders found.");
+  }
 
-    objectNode.put("Orders", mapper.convertValue(Orders, JsonNode.class));
+  @RequestMapping(method=RequestMethod.GET)
+  public ResponseEntity<ObjectNode> getAllOrders(){
+    ObjectNode objectNode = mapper.createObjectNode();
+    Iterable<Orders> orders = ordersRepository.findAll();
+    objectNode.put("orders", mapper.convertValue(orders, JsonNode.class));
     return ResponseEntity.ok(objectNode);
+  }
 
+  @RequestMapping(method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<ObjectNode> createOrder(@RequestBody Orders order){
+    ObjectNode objectNode = mapper.createObjectNode();
+    try{
+      ordersRepository.save(order);
+      System.out.println(order.toString());
+      objectNode.put("order", mapper.convertValue(ordersRepository.findById(order.getId()).get(), JsonNode.class));
+      return ResponseEntity.ok(objectNode);
+    } catch (Exception e){
+      objectNode.put("message", "not created, bad input.");
+      objectNode.put("exception", e.toString());
+      objectNode.put("stacktrace", mapper.convertValue(e.getStackTrace(), JsonNode.class));
+      return ResponseEntity.ok(objectNode);
+    }
   }
 
 }
