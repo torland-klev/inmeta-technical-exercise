@@ -14,7 +14,7 @@ plugins {
 }
 
 bootJar {
-    baseName = 'team-registration-rest-service'
+    baseName = 'inmeta-technical-exercise-rest-service'
     version =  '0.1.0'
 }
 
@@ -29,5 +29,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.postgresql:postgresql'
+  implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+  testImplementation 'com.jayway.jsonpath:json-path'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
