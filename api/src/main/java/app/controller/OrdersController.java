@@ -14,29 +14,29 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import app.repository.OrderRepository;
-import app.model.Order;
+import app.repository.OrdersRepository;
+import app.model.Orders;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(path="/orders")
-public class OrderController {
-  private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+public class OrdersController {
+  private static final Logger logger = LoggerFactory.getLogger(OrdersController.class);
 
-  private @Autowired OrderRepository orderRepository;
+  private @Autowired OrdersRepository ordersRepository;
   private @Autowired ObjectMapper mapper;
 
   @RequestMapping(method=RequestMethod.GET, params = "id")
   public ResponseEntity<ObjectNode> getOrder(long id){
     ObjectNode objectNode = mapper.createObjectNode();
     objectNode.put("id", id);
-    Order order = orderRepository.findById(id).get();
-    if (order == null){
+    Orders Orders = orderRepository.findById(id).get();
+    if (Orders == null){
       return ResponseEntity.notFound().build();
     }
-    objectNode.put("message", "Order found.");
+    objectNode.put("message", "Orders found.");
 
-    objectNode.put("order", mapper.convertValue(order, JsonNode.class));
+    objectNode.put("Orders", mapper.convertValue(Orders, JsonNode.class));
     return ResponseEntity.ok(objectNode);
 
   }
