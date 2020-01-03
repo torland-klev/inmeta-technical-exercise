@@ -21,7 +21,7 @@ public class Orders {
 
   // The orders ID. Set automatically.
   @Id @GeneratedValue(strategy=GenerationType.AUTO)
-  private long orderId;
+  private Long orderId;
 
   private LocalDateTime lastUpdated;
   private final LocalDateTime created;
@@ -59,11 +59,11 @@ public class Orders {
     return this.service;
   }
 
-  public void setOrderId(long orderId){
+  public void setOrderId(Long orderId){
     this.orderId = orderId;
     this.lastUpdated = LocalDateTime.now();
   }
-  public long getOrderId(){
+  public Long getOrderId(){
     return this.orderId;
   }
   public void setName(String name){

@@ -29,7 +29,7 @@ public class OrdersController {
   private @Autowired ObjectMapper mapper;
 
   @RequestMapping(method=RequestMethod.GET, params = "id")
-  public ResponseEntity<ObjectNode> getOrder(long id){
+  public ResponseEntity<ObjectNode> getOrder(Long id){
     ObjectNode objectNode = mapper.createObjectNode();
     try {
       Orders orders = ordersRepository.findById(id).get();
@@ -62,7 +62,7 @@ public class OrdersController {
       objectNode.put("order", mapper.convertValue(ordersRepository.findById(order.getOrderId()).get(), JsonNode.class));
       return ResponseEntity.ok(objectNode);
     } catch (Exception e){
-      objectNode.put("message", "not created, bad input.");
+      objectNode.put("message", "Not created, bad input.");
       objectNode.put("exception", e.toString());
       objectNode.put("stacktrace", mapper.convertValue(e.getStackTrace(), JsonNode.class));
       return ResponseEntity.ok(objectNode);
@@ -70,7 +70,7 @@ public class OrdersController {
   }
 
   @RequestMapping(method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_VALUE, params = "id")
-  public ResponseEntity<ObjectNode> editOrder(@RequestBody Orders order, long id){
+  public ResponseEntity<ObjectNode> editOrder(@RequestBody Orders order, Long id){
     ObjectNode objectNode = mapper.createObjectNode();
     try {
       Orders thisOrder = ordersRepository.findById(id).get();
@@ -80,7 +80,24 @@ public class OrdersController {
       objectNode.put("order", mapper.convertValue(ordersRepository.findById(thisOrder.getOrderId()).get(), JsonNode.class));
       return ResponseEntity.ok(objectNode);
     } catch (Exception e){
-      objectNode.put("message", "not updated, bad input.");
+      objectNode.put("message", "Not updated, bad input.");
+      objectNode.put("exception", e.toString());
+      objectNode.put("stacktrace", mapper.convertValue(e.getStackTrace(), JsonNode.class));
+      return ResponseEntity.ok(objectNode);
+    }
+  }
+
+  @RequestMapping(method=RequestMethod.DELETE, params = "id")
+  public ResponseEntity<ObjectNode> deleteOrder(Long id){
+    ObjectNode objectNode = mapper.createObjectNode();
+    try {
+      Orders order = ordersRepository.findById(id).get();
+      ordersRepository.delete(order);
+      objectNode.put("message", "Successfully deleted order.");
+      objectNode.put("deleted order", mapper.convertValue(order, JsonNode.class));
+      return ResponseEntity.ok(objectNode);
+    } catch (Exception e){
+      objectNode.put("message", "Not deleted, bad id.");
       objectNode.put("exception", e.toString());
       objectNode.put("stacktrace", mapper.convertValue(e.getStackTrace(), JsonNode.class));
       return ResponseEntity.ok(objectNode);
