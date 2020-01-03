@@ -39,6 +39,7 @@ public class Orders {
   private String service;
   private LocalDate date;
   private String comment;
+  private String email;
 
   public Orders(){
     this.lastUpdated = LocalDateTime.now();
@@ -113,6 +114,12 @@ public class Orders {
   }
   public LocalDateTime getLastUpdated(){
     return this.lastUpdated;
+  }
+  public void setEmail(String email){
+    this.email = email;
+  }
+  public String getEmail(){
+    return this.email;
   }
 
   public void setOrder(Orders order){
