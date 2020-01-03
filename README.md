@@ -29,7 +29,7 @@ Create and connect to the PostgreSQL database. If you change any of these values
   * Enter password for root user if set
   * `create database inmeta_technical_exercise;`
   * `create user inmeta with encrypted password 'inmeta';`
-  * `postgres=# grant all privileges on database inmeta_technical_exercise to inmeta;`
+  * `grant all privileges on database inmeta_technical_exercise to inmeta;`
   * `\c inmeta_technical_exercise inmeta`
   * Enter password 'inmeta'
   
