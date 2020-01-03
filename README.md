@@ -56,7 +56,7 @@ WEB
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+No pull requests will be accepted at this time.
 
 ## Authors
 
