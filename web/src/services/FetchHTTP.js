@@ -1,54 +1,59 @@
 
 const TARGET = "http://localhost:9090";
 
-const createOrder = (formData) => {
+const createOrder = (data, callback) => {
   fetch(TARGET + '/orders', {
      method: 'post',
-     body: formData
+     headers: {
+      'Content-Type': 'application/json'
+     },
+     body: JSON.stringify(data)
   })
   .then(res => res.json())
   .then(resJson => {
     console.log(resJson);
-    if(resJson.id){
-      alert("Order (id=" + resJson.id +") created successfully.");
+    if(resJson.orderId){
+      alert("Order (id=" + resJson.orderId +") created successfully.");
     } else {
       alert("Error occured.");
     }
-    return resJson;
+    callback(resJson);
    });
 };
 
-const findOrder = (id) => {
+const findOrder = (id, callback) => {
   fetch(TARGET + '/orders?id=' + id, {
     method: 'get'
   })
   .then(res => res.json())
   .then(resJson => {
-    console.log(resJson);
-    return resJson;
+    callback(resJson);
   });
 }
 
-const editOrder = (id, formData) => {
+const editOrder = (id, data, callback) => {
   fetch(TARGET + '/orders?id=' + id, {
     method: 'put',
-    body: formData
+    headers: {
+     'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
   })
   .then(res => res.json())
   .then(resJson => {
     console.log(resJson);
-    return resJson;
+    callback(resJson);
   });
 }
 
-const deleteOrder = (id) => {
+const deleteOrder = (id, callback) => {
   fetch(TARGET + '/orders?id=' + id, {
     method: 'delete'
   })
   .then(res => res.json())
   .then(resJson => {
     console.log(resJson);
-    return resJson;
+    callback(resJson);
   });
 }
 
