@@ -38,7 +38,10 @@ public class OrdersController {
       objectNode.put("Order", mapper.convertValue(orders, JsonNode.class));
       return ResponseEntity.ok(objectNode);
     } catch(Exception e){
-      return ResponseEntity.notFound().build();
+      objectNode.put("message", "order not found, bad id.");
+      objectNode.put("exception", e.toString());
+      objectNode.put("stacktrace", mapper.convertValue(e.getStackTrace(), JsonNode.class));
+      return ResponseEntity.ok(objectNode);
     }
   }
 
@@ -56,10 +59,28 @@ public class OrdersController {
     try{
       ordersRepository.save(order);
       System.out.println(order.toString());
-      objectNode.put("order", mapper.convertValue(ordersRepository.findById(order.getId()).get(), JsonNode.class));
+      objectNode.put("order", mapper.convertValue(ordersRepository.findById(order.getOrderId()).get(), JsonNode.class));
       return ResponseEntity.ok(objectNode);
     } catch (Exception e){
       objectNode.put("message", "not created, bad input.");
+      objectNode.put("exception", e.toString());
+      objectNode.put("stacktrace", mapper.convertValue(e.getStackTrace(), JsonNode.class));
+      return ResponseEntity.ok(objectNode);
+    }
+  }
+
+  @RequestMapping(method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_VALUE, params = "id")
+  public ResponseEntity<ObjectNode> editOrder(@RequestBody Orders order, long id){
+    ObjectNode objectNode = mapper.createObjectNode();
+    try {
+      Orders thisOrder = ordersRepository.findById(id).get();
+      thisOrder.setOrder(order);
+      ordersRepository.save(thisOrder);
+      System.out.println(thisOrder.toString());
+      objectNode.put("order", mapper.convertValue(ordersRepository.findById(thisOrder.getOrderId()).get(), JsonNode.class));
+      return ResponseEntity.ok(objectNode);
+    } catch (Exception e){
+      objectNode.put("message", "not updated, bad input.");
       objectNode.put("exception", e.toString());
       objectNode.put("stacktrace", mapper.convertValue(e.getStackTrace(), JsonNode.class));
       return ResponseEntity.ok(objectNode);

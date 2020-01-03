@@ -21,7 +21,7 @@ public class Orders {
 
   // The orders ID. Set automatically.
   @Id @GeneratedValue(strategy=GenerationType.AUTO)
-  private Long orderId;
+  private long orderId;
 
   private LocalDateTime lastUpdated;
   private final LocalDateTime created;
@@ -55,11 +55,15 @@ public class Orders {
     }
   }
 
+  public String getService(){
+    return this.service;
+  }
+
   public void setOrderId(long orderId){
     this.orderId = orderId;
     this.lastUpdated = LocalDateTime.now();
   }
-  public long getId(){
+  public long getOrderId(){
     return this.orderId;
   }
   public void setName(String name){
@@ -109,6 +113,16 @@ public class Orders {
   }
   public LocalDateTime getLastUpdated(){
     return this.lastUpdated;
+  }
+
+  public void setOrder(Orders order){
+    this.name = order.getName();
+    this.date = order.getDate();
+    this.addressFrom = order.getAddressFrom();
+    this.addressTo = order.getAddressTo();
+    this.service = order.getService();
+    this.comment = order.getComment();
+    this.lastUpdated = LocalDateTime.now();
   }
 
   @Override
