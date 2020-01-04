@@ -6,18 +6,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-/* Cant get Lombok to work with Atom.
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Links;
+
+/* TODO Make LOMBOK work with Atom.
 import lombok.Data;
 import lombok.Getter;
 */
 import app.tools.exceptions.InvalidServiceException;
 
 @Entity
-public class Orders {
+public class Orders extends RepresentationModel {
 
   // The orders ID. Set automatically.
   @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -136,4 +143,5 @@ public class Orders {
   public String toString(){
     return String.format("Name: %s, mobile: %s, address addressFrom: %s, address addressTo: %s, service: %s, moving date: %s, comment: %s", name, mobile, addressFrom, addressTo, service, date.toString(), comment);
   }
+
 }
