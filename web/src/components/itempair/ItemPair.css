@@ -1,0 +1,17 @@
+.Item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.SubItem1 {
+  align-items: center;
+  width: 48%;
+  text-align: right;
+}
+
+.SubItem2 {
+  align-items: center;
+  width: 48%;
+}

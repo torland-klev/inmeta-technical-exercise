@@ -4,7 +4,7 @@ import './App.css'
 import { APP_NAME } from '../../config';
 import { Banner, Footer } from '../';
 import SiteImage from '../siteimage/SiteImage';
-import { HomeView, OrdersView, CreateOrderView } from '../../views';
+import { HomeView, OrdersView, CreateOrderView, ViewOrderView } from '../../views';
 
 export default class App extends Component {
   render(){
@@ -17,6 +17,7 @@ export default class App extends Component {
             <Route exact path='/' component={HomeView} />
             <Route exact path='/orders' component={OrdersView} />
             <Route exact path='/orders/create' component={CreateOrderView} />
+            <Route exace path='/orders/view' render={(props) => <ViewOrderView {...props} /> } />
           </div>
         </BrowserRouter>
         <Footer />

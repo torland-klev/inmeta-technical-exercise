@@ -16,7 +16,7 @@ export default class ListContainer extends Component {
     return(
       <div className="ListContainer">
         <ListHeader />
-        <ListBody />
+        <ListBody data={this.props.data}/>
         <ListFooter />
       </div>
     );

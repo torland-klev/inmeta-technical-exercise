@@ -1,5 +1,5 @@
 
-const TARGET = "http://localhost:9090";
+const TARGET = "http://localhost:9090/v1";
 
 const createOrder = (data, callback) => {
   fetch(TARGET + '/orders', {
@@ -11,15 +11,24 @@ const createOrder = (data, callback) => {
   })
   .then(res => res.json())
   .then(resJson => {
-    console.log(resJson);
-    if(resJson.orderId){
-      alert("Order (id=" + resJson.orderId +") created successfully.");
+    if(resJson.order.orderId){
+      alert("Order (id=" + resJson.order.orderId +") created successfully.");
     } else {
       alert("Error occured.");
     }
     callback(resJson);
    });
 };
+
+const findAllOrders = (callback) => {
+  fetch(TARGET + "/orders", {
+    method: 'get'
+  })
+  .then(res => res.json())
+  .then(resJson => {
+    callback(resJson);
+  })
+}
 
 const findOrder = (id, callback) => {
   fetch(TARGET + '/orders?id=' + id, {
@@ -60,6 +69,7 @@ const deleteOrder = (id, callback) => {
 export {
   createOrder,
   findOrder,
+  findAllOrders,
   editOrder,
   deleteOrder
 };
