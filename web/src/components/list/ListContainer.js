@@ -9,14 +9,19 @@ export default class ListContainer extends Component {
     super(props);
     this.state = {
       title: "List Container",
+      sort: 'desc'
     };
+  }
+
+  handleSort = (sortType) => {
+    this.setState({sort: sortType});
   }
 
   render(){
     return(
       <div className="ListContainer">
-        <ListHeader />
-        <ListBody data={this.props.data}/>
+        <ListHeader onSortChange={(sortType) => this.handleSort(sortType)} />
+        <ListBody data={this.props.data} sort={this.state.sort}/>
         <ListFooter />
       </div>
     );

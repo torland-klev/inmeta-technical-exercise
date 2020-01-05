@@ -68,7 +68,7 @@ export default class CreateOrderView extends Component {
       try{
         // If this does'nt error, the fetch was successful.
         const check = ret.order.orderId;
-        window.alert("Update successful.");
+        window.alert("Update to order "+check+ " successful.");
       } catch{
         window.alert("Something went wrong.");
       }
